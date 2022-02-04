@@ -10,14 +10,12 @@ class Service{
 
     async recupererTout(){
         const response = await fetch.fetch(this.url);
-        const data = await response.json();
-        return data;
+        return await response.json();
     }
 
     async recupererPseudo(pseudo){
         const response = await fetch.fetch(this.url+"/"+pseudo);
-        const data = await response.json();
-        return data;
+        return await response.json();
     }
 
     async creerCollegue(collegueDto){

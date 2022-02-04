@@ -1,110 +1,33 @@
 const readline = require('readline');
-const serv = require("./service")
+const serv = require("./service");
 const dotenv = require('dotenv').config();
 
 class Presentation{
 
-    constructor(options){
-        this.options = options.set(99,"Sortir");
+    constructor(){
+        this.options = new Map()
+            .set("Lister les collègues",this.afficher)
+            .set("Créer un collègue", this.creer)
+            .set("Créer un vote", this.voter)
+            .set("Afficher le classement", this.afficherClassement)
+            .set("Afficher par pseudo", this.afficherPseudo)
+            .set("Quitter", this.quitter);
+
         this.service = new serv.Serv();
         this.inteR = readline.createInterface(process.stdin, process.stdout);
     }
 
     demarrer(){
-        this.options.forEach((value,key) => {
-            console.log(key+" : "+value);
-        });
+        const opt = this.options.keys();
+        for(const i in [...Array(this.options.size)]){
+            console.log(i+" : "+opt.next().value);
+        }
     }
 
-    utiliser(){
+    async utiliser(){
         const demarrage = this.demarrer();
         this.inteR.setPrompt(demarrage);
-        this.inteR.on('line', (choix) => this.choisir(choix));
-    }
-
-    async choisir(choix){
-        console.log("Votre choix : "+choix);
-        switch(choix){
-            case '1': 
-                await this.afficher();
-                break;
-            case '2':
-                await this.creer();
-                break;
-            case '3':
-                await this.voter();
-                break;
-            case '4':
-                await this.afficherClassement();
-                break;
-            case '5':
-                await this.afficherPseudo();
-                break;
-            case '99':
-                console.log("Au revoir");
-                break;
-        }
-    }
-
-    async afficher(){
-        this.inteR.close();
-        console.log(">> Liste des collègues");            
-        const data = await this.service.recupererTout();
-        data.forEach(this.afficherCollegue);
-    }
-
-    async creer(){
-        const collegueDto = await this.creerCollegueDto();
-        try{
-            const collegue = await this.service.creerCollegue(collegueDto);
-            this.afficherCollegue(collegue);     
-        } catch(e){
-            console.log("Collègue invalide - création annulée.");
-            console.error(e);
-        }
-    }   
-
-    async creerCollegueDto(){
-        const nom = await this.saisirMot("Veuillez saisir un nom : ");
-        const photo = process.env.URL_PHOTO;
-        const prenom = await this.saisirMot("Veuillez saisir un prenom : ");
-        const pseudo = await this.saisirMot("Veuillez saisir un pseudo : ");
-        return {nom:nom, photo:photo, prenom:prenom, pseudo:pseudo};
-    }
-
-    async voter(){
-        const voteDto = await this.creerVoteDto();
-        try{
-            const collegue = await this.service.voter(voteDto);
-            this.afficherCollegue(collegue);
-        } catch(e){
-            console.log("Vote invalidé");
-            consoler.error(e);
-        }
-    }
-
-    async creerVoteDto(){
-        const pseudo = await this.saisirMot("Veuillez saisir un pseudo : ");
-        return {avis:"AIMER", pseudo:pseudo};
-    }
-
-    async afficherClassement(){
-        this.inteR.close();
-        console.log(">> Classement des collègues");            
-        const data = await this.service.recupererTout();
-        data.sort((a,b) => b.score - a.score);
-        data.forEach(this.afficherCollegue);
-    }
-
-    async afficherPseudo(){
-        try{
-            const pseudo = await this.saisirMot("Veuillez saisir un pseudo\n");
-            const collegue = await this.service.recupererPseudo(pseudo);    
-            this.afficherCollegue(collegue);
-        } catch(e) {
-            console.log("Pseudo non trouvé");
-            console.error(e);
-        }
+        this.choisir( await this.saisirMot("Votre choix : "));
     }
 
     saisirMot(laQuestion){
@@ -115,6 +38,76 @@ class Presentation{
         console.log(`${collegue.pseudo} : ${collegue.prenom} ${collegue.nom} > score : ${collegue.score}`);
     }
 
+
+    async choisir(choix){
+        await Array.from(this.options.values())[parseInt(choix)]();
+    }
+
+    afficher = async () => {
+        this.inteR.close();
+        console.log(">> Liste des collègues");            
+        const data = await this.service.recupererTout();
+        data.forEach(this.afficherCollegue);
+    }
+
+    creer = async () => {
+        const collegueDto = await this.creerCollegueDto();
+        try{
+            const collegue = await this.service.creerCollegue(collegueDto);
+            this.afficherCollegue(collegue);     
+        } catch(e){
+            console.log("Collègue invalide - création annulée.");
+            console.error(e);
+        }
+    }   
+
+    creerCollegueDto = async () => {
+        const nom = await this.saisirMot("Veuillez saisir un nom : ");
+        const photo = process.env.URL_PHOTO;
+        const prenom = await this.saisirMot("Veuillez saisir un prenom : ");
+        const pseudo = await this.saisirMot("Veuillez saisir un pseudo : ");
+        return {nom:nom, photo:photo, prenom:prenom, pseudo:pseudo};
+    }
+
+    voter = async () => {
+        const voteDto = await this.creerVoteDto();
+        try{
+            const collegue = await this.service.voter(voteDto);
+            this.afficherCollegue(collegue);
+        } catch(e){
+            console.log("Vote invalidé");
+            consoler.error(e);
+        }
+    }
+
+    creerVoteDto = async () => {
+        const pseudo = await this.saisirMot("Veuillez saisir un pseudo : ");
+        return {avis:"AIMER", pseudo:pseudo};
+    }
+
+    afficherClassement = async () => {
+        this.inteR.close();
+        console.log(">> Classement des collègues");            
+        const data = await this.service.recupererTout();
+        data.sort((a,b) => b.score - a.score)
+            .forEach(this.afficherCollegue);
+    }
+
+    afficherPseudo = async () => {
+        try{
+            const pseudo = await this.saisirMot("Veuillez saisir un pseudo\n");
+            const collegue = await this.service.recupererPseudo(pseudo);    
+            this.afficherCollegue(collegue);
+        } catch(e) {
+            console.log("Pseudo non trouvé");
+            console.error(e);
+        }
+    }
+
+    quitter = async () => {
+        console.log("Au revoir");
+        this.inteR.close();
+    }
 }
 
 exports.Pres = Presentation;
