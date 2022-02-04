@@ -19,6 +19,16 @@ class Service{
         return data;
     }
 
+    async creerCollegue(collegueDto){
+        const response = await fetch.fetch(this.url,
+            {
+                method: 'post',
+                body: JSON.stringify(collegueDto),
+                headers: {'Content-Type': 'application/json'}
+            });
+        return await response.json();
+    }
+
 }
 
 exports.Serv = Service;

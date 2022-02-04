@@ -1,7 +1,6 @@
 const readline = require('readline');
 const serv = require("./service")
-const util = require('util');
-
+const dotenv = require('dotenv').config();
 
 class Presentation{
 
@@ -33,6 +32,9 @@ class Presentation{
             case '2':
                 await this.creer();
                 break;
+            case '3':
+                await this.voter();
+                break;
             case '5':
                 await this.afficherPseudo();
                 break;
@@ -51,12 +53,23 @@ class Presentation{
        }
     }
 
-    saisirMot(laQuestion){
-        return new Promise(resolve => this.inteR.question(laQuestion, x => resolve(x)));
-    }
-
     async creer(){
-        console.log("Saisir un pseudo");
+            const collegueDto = await this.creerCollegueDto();
+        try{
+            const collegue = await this.service.creerCollegue(collegueDto);
+            this.afficherCollegue(collegue);     
+        } catch(e){
+            console.log("Collègue invalide - création annulée.");
+            console.error(e);
+        }
+    }   
+
+    async creerCollegueDto(){
+        const nom = await this.saisirMot("Veuillez saisir un nom : ");
+        const photo = process.env.URL_PHOTO;
+        const prenom = await this.saisirMot("Veuillez saisir un prenom : ");
+        const pseudo = await this.saisirMot("Veuillez saisir un pseudo : ");
+        return {nom:nom, photo:photo, prenom:prenom, pseudo:pseudo};
     }
 
     async voter(){
@@ -74,11 +87,16 @@ class Presentation{
             this.afficherCollegue(collegue);
         } catch(e) {
             console.log("Pseudo non trouvé");
+            console.error(e);
         }
     }
 
+    saisirMot(laQuestion){
+        return new Promise(resolve => this.inteR.question(laQuestion, x => resolve(x)));
+    }
+
     afficherCollegue(collegue){
-        console.log(collegue.pseudo+" : "+collegue.prenom+" "+collegue.nom);
+        console.log(`${collegue.pseudo} : ${collegue.prenom} ${collegue.nom}`);
     }
 
 }
