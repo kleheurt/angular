@@ -1,0 +1,18 @@
+const fetch = require('cross-fetch');
+const dotenv = require('dotenv').config();
+
+class Service{
+
+    constructor(){
+        this.url = process.env.URL_API;
+    }
+
+    async recuperer(){
+        const response = await fetch.fetch(this.url);
+        const data = await response.json();
+        return data;
+    }
+
+}
+
+exports.Serv = Service;
