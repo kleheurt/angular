@@ -13,6 +13,12 @@ class Service{
         return data;
     }
 
+    async recupererPseudo(pseudo){
+        const response = await fetch.fetch(this.url+"/"+pseudo);
+        const data = await response.json();
+        return data;
+    }
+
 }
 
 exports.Serv = Service;

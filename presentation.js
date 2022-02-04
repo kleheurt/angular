@@ -51,6 +51,10 @@ class Presentation{
        }
     }
 
+    saisirMot(laQuestion){
+        return new Promise(resolve => this.inteR.question(laQuestion, x => resolve(x)));
+    }
+
     async creer(){
         console.log("Saisir un pseudo");
     }
@@ -61,6 +65,16 @@ class Presentation{
 
     async afficherClassement(){
         console.log("à implémenter");
+    }
+
+    async afficherPseudo(){
+        try{
+            const pseudo = await this.saisirMot("Veuillez saisir un pseudo\n");
+            const collegue = await this.service.recupererPseudo(pseudo);    
+            this.afficherCollegue(collegue);
+        } catch(e) {
+            console.log("Pseudo non trouvé");
+        }
     }
 
     afficherCollegue(collegue){
