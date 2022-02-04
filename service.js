@@ -5,6 +5,7 @@ class Service{
 
     constructor(){
         this.url = process.env.URL_API;
+        this.urlVote = process.env.URL_VOTE;
     }
 
     async recuperer(){
@@ -24,6 +25,16 @@ class Service{
             {
                 method: 'post',
                 body: JSON.stringify(collegueDto),
+                headers: {'Content-Type': 'application/json'}
+            });
+        return await response.json();
+    }
+
+    async voter(voteDto){
+        const response = await fetch.fetch(this.urlVote,
+            {
+                method: 'post',
+                body: JSON.stringify(voteDto),
                 headers: {'Content-Type': 'application/json'}
             });
         return await response.json();

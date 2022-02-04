@@ -8,7 +8,6 @@ class Presentation{
         this.options = options.set(99,"Sortir");
         this.service = new serv.Serv();
         this.inteR = readline.createInterface(process.stdin, process.stdout);
-
     }
 
     demarrer(){
@@ -35,6 +34,9 @@ class Presentation{
             case '3':
                 await this.voter();
                 break;
+            case '4':
+                await this.afficherClassement();
+                break;
             case '5':
                 await this.afficherPseudo();
                 break;
@@ -54,7 +56,7 @@ class Presentation{
     }
 
     async creer(){
-            const collegueDto = await this.creerCollegueDto();
+        const collegueDto = await this.creerCollegueDto();
         try{
             const collegue = await this.service.creerCollegue(collegueDto);
             this.afficherCollegue(collegue);     
@@ -73,7 +75,19 @@ class Presentation{
     }
 
     async voter(){
-        console.log("à implémenter");
+        const voteDto = await this.creerVoteDto();
+        try{
+            const collegue = await this.service.voter(voteDto);
+            this.afficherCollegue(collegue);
+        } catch(e){
+            console.log("Vote invalidé");
+            consoler.error(e);
+        }
+    }
+
+    async creerVoteDto(){
+        const pseudo = await this.saisirMot("Veuillez saisir un pseudo : ");
+        return {avis:"AIMER", pseudo:pseudo};
     }
 
     async afficherClassement(){
@@ -96,7 +110,7 @@ class Presentation{
     }
 
     afficherCollegue(collegue){
-        console.log(`${collegue.pseudo} : ${collegue.prenom} ${collegue.nom}`);
+        console.log(`${collegue.pseudo} : ${collegue.prenom} ${collegue.nom} > score : ${collegue.score}`);
     }
 
 }
