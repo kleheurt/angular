@@ -8,7 +8,7 @@ class Service{
         this.urlVote = process.env.URL_VOTE;
     }
 
-    async recuperer(){
+    async recupererTout(){
         const response = await fetch.fetch(this.url);
         const data = await response.json();
         return data;

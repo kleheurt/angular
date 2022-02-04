@@ -49,10 +49,8 @@ class Presentation{
     async afficher(){
         this.inteR.close();
         console.log(">> Liste des collègues");            
-        const data = await this.service.recuperer();
-        for(const collegue of data){
-            this.afficherCollegue(collegue);
-       }
+        const data = await this.service.recupererTout();
+        data.forEach(this.afficherCollegue);
     }
 
     async creer(){
@@ -91,7 +89,11 @@ class Presentation{
     }
 
     async afficherClassement(){
-        console.log("à implémenter");
+        this.inteR.close();
+        console.log(">> Classement des collègues");            
+        const data = await this.service.recupererTout();
+        data.sort((a,b) => b.score - a.score);
+        data.forEach(this.afficherCollegue);
     }
 
     async afficherPseudo(){
