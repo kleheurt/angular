@@ -1,0 +1,1 @@
+{"version":3,"file":"main.js","mappings":"mBAEAA,QAAQC,IAAI,U","sources":["webpack://collegues-console/./src/web/index.ts"],"sourcesContent":["import Service from '../common/service';\r\n\r\nconsole.log(\"ok ok\");"],"names":["console","log"],"sourceRoot":""}

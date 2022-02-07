@@ -1,4 +1,4 @@
 import Presentation from './presentation';
-import Service from './service';
+import Service from '../common/service';
 
 new Presentation(new Service).utiliser();

@@ -1,0 +1,29 @@
+{
+  "name": "collegues-console",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/console/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node ./src/console/index.ts",
+    "web:serve": "webpack serve --mode development",
+    "web:build": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^17.0.15",
+    "cross-fetch": "^3.1.5",
+    "dotenv": "^16.0.0",
+    "ts-node": "^10.4.0"
+  },
+  "devDependencies": {
+    "dotenv-webpack": "^7.1.0",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.5.5",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  }
+}

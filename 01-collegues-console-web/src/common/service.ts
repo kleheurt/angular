@@ -1,5 +1,5 @@
 import * as fetch from 'cross-fetch';
-import 'dotenv/config';
+// import 'dotenv/config'; //dotenv-webpack
 import {CollegueDto, VoteDto} from './collegue';
 
 

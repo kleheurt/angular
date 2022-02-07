@@ -5,6 +5,11 @@ type CollegueBase = {
     nom:string;
 }
 
+export type CollegueWeb = CollegueBase & {
+    score:number;
+    photo:string;
+}
+
 export type Collegue = CollegueBase & {
     score:number;
 }

@@ -1,7 +1,7 @@
 import * as readline from 'node:readline';
 import 'dotenv/config';
-import Service from './service';
-import {Collegue} from './collegue';
+import Service from '../common/service';
+import {Collegue} from '../common/collegue';
 
 
 export default class Presentation{
