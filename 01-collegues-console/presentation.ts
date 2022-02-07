@@ -11,8 +11,6 @@ export default class Presentation{
     inteR:readline.Interface;
 
     constructor(service:Service){
-        console.log('** Administration Collègues **');
-
         this.options = new Map()
             .set("Lister les collègues",this.afficher)
             .set("Créer un collègue", this.creer)
@@ -26,6 +24,7 @@ export default class Presentation{
     }
 
     demarrer(){
+        console.log('** Administration Collègues **');
         const opt = this.options.keys();
         for(const i in [...Array(this.options.size)]){
             console.log(i+" : "+opt.next().value);
