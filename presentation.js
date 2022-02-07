@@ -4,6 +4,8 @@ import 'dotenv/config';
 export default class Presentation{
 
     constructor(service){
+        console.log('** Administration Collègues **');
+
         this.options = new Map()
             .set("Lister les collègues",this.afficher)
             .set("Créer un collègue", this.creer)
