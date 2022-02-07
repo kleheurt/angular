@@ -36,10 +36,7 @@ export default class Presentation{
         this.choisir( await this.saisirMot("Votre choix : "));
     }
 
-    async saisirMot(laQuestion:string){
-        const mot:string = await new Promise(resolve => this.inteR.question(laQuestion, x => resolve(x)));
-        return mot;
-    }
+    saisirMot = async (q:string):Promise<string> => await new Promise(resolve => this.inteR.question(q, x => resolve(x)));
 
     afficherCollegue(collegue:Collegue){
         console.log(`${collegue.pseudo} : ${collegue.prenom} ${collegue.nom} > score : ${collegue.score}`);
