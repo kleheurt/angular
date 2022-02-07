@@ -1,7 +1,7 @@
-const fetch = require('cross-fetch');
-const dotenv = require('dotenv').config();
+import * as fetch from 'cross-fetch';
+import 'dotenv/config';
 
-class Service{
+export default class Service{
 
     constructor(){
         this.url = process.env.URL_API;
@@ -39,5 +39,3 @@ class Service{
     }
 
 }
-
-exports.Serv = Service;

@@ -1,6 +1,8 @@
-const pres = require("./presentation")
+// const pres = require("./presentation")
+import Presentation from './presentation.js';
+import Service from './service.js';
 
 console.log('** Administration Collègues **');
-presentation = new pres.Pres();
+const presentation = new Presentation(new Service);
 presentation.utiliser();
 

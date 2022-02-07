@@ -1,10 +1,9 @@
-const readline = require('readline');
-const serv = require("./service");
-const dotenv = require('dotenv').config();
+import * as readline from 'node:readline';
+import 'dotenv/config';
 
-class Presentation{
+export default class Presentation{
 
-    constructor(){
+    constructor(service){
         this.options = new Map()
             .set("Lister les collègues",this.afficher)
             .set("Créer un collègue", this.creer)
@@ -13,7 +12,7 @@ class Presentation{
             .set("Afficher par pseudo", this.afficherPseudo)
             .set("Quitter", this.quitter);
 
-        this.service = new serv.Serv();
+        this.service = service;
         this.inteR = readline.createInterface(process.stdin, process.stdout);
     }
 
@@ -108,5 +107,3 @@ class Presentation{
         this.inteR.close();
     }
 }
-
-exports.Pres = Presentation;
