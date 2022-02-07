@@ -14,7 +14,7 @@ class Service{
     }
 
     async recupererPseudo(pseudo){
-        const response = await fetch.fetch(this.url+"/"+pseudo);
+        const response =  await fetch.fetch(this.url+"/"+pseudo);
         return await response.json();
     }
 

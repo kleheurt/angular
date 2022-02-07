@@ -38,7 +38,6 @@ class Presentation{
         console.log(`${collegue.pseudo} : ${collegue.prenom} ${collegue.nom} > score : ${collegue.score}`);
     }
 
-
     async choisir(choix){
         await Array.from(this.options.values())[parseInt(choix)]();
     }
@@ -66,7 +65,7 @@ class Presentation{
         const photo = process.env.URL_PHOTO;
         const prenom = await this.saisirMot("Veuillez saisir un prenom : ");
         const pseudo = await this.saisirMot("Veuillez saisir un pseudo : ");
-        return {nom:nom, photo:photo, prenom:prenom, pseudo:pseudo};
+        return {nom, photo, prenom, pseudo};
     }
 
     voter = async () => {
@@ -95,7 +94,7 @@ class Presentation{
 
     afficherPseudo = async () => {
         try{
-            const pseudo = await this.saisirMot("Veuillez saisir un pseudo\n");
+            const pseudo = await this.saisirMot("Veuillez saisir un pseudo : ");
             const collegue = await this.service.recupererPseudo(pseudo);    
             this.afficherCollegue(collegue);
         } catch(e) {
