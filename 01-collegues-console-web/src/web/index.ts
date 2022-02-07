@@ -13,7 +13,7 @@ async function afficher(){
 
 function afficherCollegue(collegue:CollegueWeb):string {
     return `<tr>
-                <td class='col-md-2'> <img src='${collegue.photo}'></td>
+                <td class='col-md-2'> <img style='max-width:128px;' src='${collegue.photo}'></td>
                 <td> ${collegue.pseudo} </td>
                 <td> ${collegue.prenom} </td>
                 <td> ${collegue.nom} </td>
