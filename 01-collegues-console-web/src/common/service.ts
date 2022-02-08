@@ -5,8 +5,8 @@ import {CollegueDto, VoteDto} from './collegue';
 
 export default class Service{
 
-    url:string = process.env.URL_API!;
-    urlVote:string = process.env.URL_VOTE!;
+    private url:string = process.env.URL_API!;
+    private urlVote:string = process.env.URL_VOTE!;
 
     async recupererTout(){
         const response = await fetch.fetch(this.url);

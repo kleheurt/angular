@@ -6,11 +6,10 @@ import {Collegue} from '../common/collegue';
 
 export default class Presentation{
 
-    options:Map<string,Function>;
-    service:Service;
-    inteR:readline.Interface;
+    private options:Map<string,Function>;
+    private inteR:readline.Interface;
 
-    constructor(service:Service){
+    constructor(private service:Service){
         this.options = new Map()
             .set("Lister les collègues",this.afficher)
             .set("Créer un collègue", this.creer)
