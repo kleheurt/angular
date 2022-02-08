@@ -4,11 +4,13 @@ import {CollegueWeb} from '../common/collegue';
 const service:Service = new Service();
 
 async function afficher(){
-    const contenu = document.querySelector("#contenu")!;
-    contenu.innerHTML += (await service.recupererTout())
-        .sort((x:CollegueWeb,y:CollegueWeb) => y.score - x.score)
-        .map((x:CollegueWeb) => afficherCollegue(x))
-        .reduce((x:string, y:string) => x+y);
+    document
+        .querySelector("#contenu")!
+        .innerHTML += 
+            (await service.recupererTout())
+                .sort((x:CollegueWeb,y:CollegueWeb) => y.score - x.score)
+                .map((x:CollegueWeb) => afficherCollegue(x))
+                .reduce((x:string, y:string) => x+y);
 }
 
 function afficherCollegue(collegue:CollegueWeb):string {
